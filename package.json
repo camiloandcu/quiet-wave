@@ -1,0 +1,17 @@
+{
+  "name": "audio-monitor-demo",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "http-server -c-1 -p 8000 -o",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:integration": "node __tests__/integration.js"
+  },
+  "devDependencies": {
+    "@jest/globals": "30.4.0",
+    "http-server": "14.1.1",
+    "jest": "30.4.0",
+    "jest-environment-jsdom": "30.4.0",
+    "puppeteer": "25.0.2"
+  }
+}

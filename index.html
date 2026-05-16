@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Real-time Audio Monitor</title>
+    <link rel="stylesheet" href="styles/main.css" />
+</head>
+
+<body>
+    <main class="container">
+        <header>
+            <h1>Real-time Audio Monitor</h1>
+            <div class="controls">
+                <button id="startStop">Start</button>
+                <span id="status" class="badge">Ready</span>
+            </div>
+        </header>
+
+        <section class="visuals">
+            <div class="panel">
+                <h2>Waveform</h2>
+                <canvas id="waveform" width="800" height="150"></canvas>
+            </div>
+            <div class="panel">
+                <h2>Spectrum</h2>
+                <canvas id="spectrum" width="800" height="150"></canvas>
+            </div>
+        </section>
+
+        <footer class="note">Use headphones. Click Start and grant microphone permission when prompted.</footer>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+
+</html>
