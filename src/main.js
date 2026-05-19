@@ -16,6 +16,7 @@ let spectrumRenderer = null;
 let isRunning = false;
 let rafId = null;
 let currentMix = 0;
+let audioAnalysers = null;
 
 function ensureAudioContext() {
   if (!audioContext) {
@@ -34,7 +35,10 @@ async function startMonitoring() {
 
     processor = createAudioProcessor(ctx);
     audioOutput = createAudioOutput(ctx, stream);
-    await audioOutput.connect(processor.getAnalyser());
+    await audioOutput.connect(stream); // Pass stream to recreate sourceNode
+
+    // Get the analysers for visualization
+    audioAnalysers = audioOutput.getAnalysers();
 
     // Initialize mix and UI
     audioOutput.setMixRatio(0);
@@ -98,12 +102,20 @@ function stopMonitoring() {
 
 function startVisualization() {
   function draw() {
-    if (!isRunning || !processor) return;
+    if (!isRunning || !audioAnalysers || !waveformRenderer) return;
 
-    const timeData = processor.getTimeDomainData();
-    const freqData = processor.getFrequencyData();
+    // Get data from both analysers
+    const origTimeData = new Float32Array(audioAnalysers.origAnalyser.fftSize);
+    audioAnalysers.origAnalyser.getFloatTimeDomainData(origTimeData);
 
-    waveformRenderer.draw(timeData);
+    const invTimeData = new Float32Array(audioAnalysers.invAnalyser.fftSize);
+    audioAnalysers.invAnalyser.getFloatTimeDomainData(invTimeData);
+
+    const freqData = new Uint8Array(audioAnalysers.masterAnalyser.frequencyBinCount);
+    audioAnalysers.masterAnalyser.getByteFrequencyData(freqData);
+
+    // Draw dual waveform (original + inverted overlay)
+    waveformRenderer.drawDual(origTimeData, invTimeData);
     spectrumRenderer.draw(freqData);
 
     rafId = requestAnimationFrame(draw);
