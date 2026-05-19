@@ -15,6 +15,7 @@ let waveformRenderer = null;
 let spectrumRenderer = null;
 let isRunning = false;
 let rafId = null;
+let currentMix = 0;
 
 function ensureAudioContext() {
   if (!audioContext) {
@@ -34,6 +35,21 @@ async function startMonitoring() {
     processor = createAudioProcessor(ctx);
     audioOutput = createAudioOutput(ctx, stream);
     await audioOutput.connect(processor.getAnalyser());
+
+    // Initialize mix and UI
+    audioOutput.setMixRatio(0);
+    controls.setMixValue(0);
+
+    controls.onEffectToggle((enabled) => {
+      audioOutput.setEffectEnabled(enabled);
+      controls.setModeLabel(enabled ? Math.round(currentMix * 100) + '%' : 'Bypass');
+    });
+
+    controls.onMixChange((v) => {
+      currentMix = v;
+      audioOutput.setMixRatio(v);
+      controls.setMixValue(v);
+    });
 
     waveformRenderer = createWaveformRenderer(document.getElementById('waveform'));
     spectrumRenderer = createSpectrumRenderer(document.getElementById('spectrum'));
