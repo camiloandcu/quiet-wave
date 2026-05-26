@@ -4,6 +4,9 @@
     --accent: #08a0f7;
     --text: #e6eef6;
     --muted: #9fb3c8;
+    --axis: #6f84a0;
+    --legend-cyan: #08f1c4;
+    --legend-purple: #b65cff;
 }
 
 * {
@@ -20,9 +23,9 @@ body {
 }
 
 .container {
-    max-width: 980px;
+    max-width: 1120px;
     margin: auto;
-    padding: 20px;
+    padding: 24px 20px 28px;
     width: 100%
 }
 
@@ -30,11 +33,13 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap
 }
 
 h1 {
-    font-size: 1.1rem;
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
     margin: 0
 }
 
@@ -42,6 +47,14 @@ h1 {
     display: flex;
     gap: 12px;
     align-items: center
+}
+
+.control-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text);
+    font-size: 0.92rem
 }
 
 button {
@@ -64,25 +77,72 @@ button {
 .visuals {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px
+    gap: 14px
 }
 
 .panel {
     background: var(--panel);
-    padding: 12px;
-    border-radius: 8px
+    padding: 18px 18px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(111, 132, 160, 0.18)
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-wrap: wrap
+}
+
+.panel-title-block {
+    min-width: 0
 }
 
 .panel h2 {
     margin: 0 0 8px 0;
-    font-size: 0.9rem;
-    color: var(--muted)
+    font-size: 0.92rem;
+    color: var(--text)
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px 14px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.35
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap
+}
+
+.legend-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.06)
+}
+
+.legend-swatch--cyan {
+    background: var(--legend-cyan)
+}
+
+.legend-swatch--purple {
+    background: var(--legend-purple)
 }
 
 canvas {
     width: 100%;
-    height: 150px;
-    border-radius: 6px;
+    height: 260px;
+    border-radius: 8px;
     background: #051018;
     display: block
 }
@@ -96,5 +156,23 @@ canvas {
 @media(min-width:900px) {
     .visuals {
         grid-template-columns: 1fr 1fr
+    }
+}
+
+@media(max-width:640px) {
+    .controls {
+        flex-wrap: wrap
+    }
+
+    .panel-head {
+        margin-bottom: 8px
+    }
+
+    .chart-legend {
+        justify-content: flex-start
+    }
+
+    canvas {
+        height: 220px
     }
 }

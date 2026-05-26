@@ -42,6 +42,7 @@ const indexPath = `file://${projectRoot}/index.html`;
         hasStartBtn: !!document.getElementById('startStop'),
         hasWaveCanvas: !!document.getElementById('waveform'),
         hasSpecCanvas: !!document.getElementById('spectrum'),
+        hasWaveLegend: document.body.textContent.includes('Captured headphone signal') && document.body.textContent.includes('Cancellation wave'),
         initialStatus: document.getElementById('status')?.textContent,
         mocksReady: window.testMocksReady
       };
@@ -50,6 +51,7 @@ const indexPath = `file://${projectRoot}/index.html`;
     console.log('✓ Page loaded successfully');
     console.log(`  Title: ${pageState.title}`);
     console.log(`  UI Elements present: Start button: ${pageState.hasStartBtn}, Canvases: ${pageState.hasWaveCanvas && pageState.hasSpecCanvas}`);
+    console.log(`  Labels present: legend=${pageState.hasWaveLegend}`);
     console.log(`  Initial status: "${pageState.initialStatus}"`);
 
     // Click Start button and wait for any errors
@@ -70,7 +72,7 @@ const indexPath = `file://${projectRoot}/index.html`;
     // The important thing is the app handles errors gracefully
     const appHandledErrors = finalStatus === 'Unsupported' || finalStatus === 'Ready';
     
-    if (pageState.hasStartBtn && pageState.hasWaveCanvas && pageState.hasSpecCanvas && appHandledErrors) {
+    if (pageState.hasStartBtn && pageState.hasWaveCanvas && pageState.hasSpecCanvas && pageState.hasWaveLegend && appHandledErrors) {
       console.log('✓ Integration test passed: App loads, UI renders, and handles headless mode gracefully');
       process.exit(0);
     } else {

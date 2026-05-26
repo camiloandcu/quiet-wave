@@ -55,8 +55,8 @@ async function startMonitoring() {
       controls.setMixValue(v);
     });
 
-    waveformRenderer = createWaveformRenderer(document.getElementById('waveform'));
-    spectrumRenderer = createSpectrumRenderer(document.getElementById('spectrum'));
+    waveformRenderer = createWaveformRenderer(document.getElementById('waveform'), { sampleRate: ctx.sampleRate });
+    spectrumRenderer = createSpectrumRenderer(document.getElementById('spectrum'), { sampleRate: ctx.sampleRate });
 
     isRunning = true;
     controls.setStatus('Running');

@@ -28,12 +28,26 @@
 
         <section class="visuals">
             <div class="panel">
-                <h2>Waveform</h2>
-                <canvas id="waveform" width="800" height="150"></canvas>
+                <div class="panel-head">
+                    <div class="panel-title-block">
+                        <h2>Waveform</h2>
+                    </div>
+                    <p class="chart-legend" aria-label="Waveform legend">
+                        <span class="legend-item"><span class="legend-swatch legend-swatch--cyan"></span>Captured
+                            headphone signal</span>
+                        <span class="legend-item"><span class="legend-swatch legend-swatch--purple"></span>Cancellation
+                            wave</span>
+                    </p>
+                </div>
+                <canvas id="waveform" width="800" height="220"></canvas>
             </div>
             <div class="panel">
-                <h2>Spectrum</h2>
-                <canvas id="spectrum" width="800" height="150"></canvas>
+                <div class="panel-head">
+                    <div class="panel-title-block">
+                        <h2>Spectrum</h2>
+                    </div>
+                </div>
+                <canvas id="spectrum" width="800" height="220"></canvas>
             </div>
         </section>
 

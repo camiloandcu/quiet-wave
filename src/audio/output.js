@@ -111,6 +111,22 @@ export function createAudioOutput(audioContext, mediaStream) {
     }
   }
 
+  // Helper: compute the branch gains used by setMixRatio (pure function, testable)
+  function computeGains(value) {
+    const clamped = Math.max(0, Math.min(1, value));
+    const origGain = 1.0 - clamped * 0.5;
+    const invGain = clamped * 0.5;
+    return { clamped, origGain, invGain };
+  }
+
+  // Helper: compute the mixed sample result for a single sample value
+  // Mirrors the audio graph: output = origGain*original + invGain*(-original)
+  // which simplifies to (origGain - invGain) * original
+  function computeMixedSample(originalSample, mixRatio) {
+    const { clamped, origGain, invGain } = computeGains(mixRatio);
+    return (origGain - invGain) * originalSample;
+  }
+
   function setEffectEnabled(enabled) {
     // If disabled: origBranch=1, invBranch=0
     // If enabled: keep current mix ratio
@@ -131,9 +147,24 @@ export function createAudioOutput(audioContext, mediaStream) {
     connect,
     disconnect,
     setMixRatio,
+    computeGains,
+    computeMixedSample,
     setEffectEnabled,
     getNodes,
     getAnalysers,
     get source() { return sourceNode; }
   };
+}
+
+// Top-level, pure helpers exported for unit testing
+export function computeGains(value) {
+  const clamped = Math.max(0, Math.min(1, value));
+  const origGain = 1.0 - clamped * 0.5;
+  const invGain = clamped * 0.5;
+  return { clamped, origGain, invGain };
+}
+
+export function computeMixedSample(originalSample, mixRatio) {
+  const { origGain, invGain } = computeGains(mixRatio);
+  return (origGain - invGain) * originalSample;
 }
