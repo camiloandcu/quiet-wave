@@ -4,9 +4,26 @@ import { createAudioProcessor } from './audio/processor.js';
 import { createAudioOutput } from './audio/output.js';
 import { createWaveformRenderer } from './visualization/waveform.js';
 import { createSpectrumRenderer } from './visualization/spectrum.js';
+import { createUploadAnalysis } from './analysis/upload-analysis.js';
 
 const controls = createControls('startStop', 'status');
 const audioInput = createAudioInput();
+const uploadAnalysis = createUploadAnalysis({
+  audioContextFactory: () => ensureAudioContext(),
+  triggerButton: document.getElementById('uploadAudioButton'),
+  fileInput: document.getElementById('audioFileInput'),
+  overlay: document.getElementById('analysisOverlay'),
+  loadingState: document.getElementById('analysisLoadingState'),
+  resultState: document.getElementById('analysisResultState'),
+  loadingMessage: document.getElementById('analysisOverlayMessage'),
+  overlayTitle: document.getElementById('analysisOverlayTitle'),
+  overlaySubtitle: document.getElementById('analysisOverlaySubtitle'),
+  closeButton: document.getElementById('analysisClose'),
+  downloadButton: document.getElementById('analysisDownload'),
+  comparisonImage: document.getElementById('analysisComparisonImage'),
+  metricsContainer: document.getElementById('analysisMetrics'),
+  detailContainer: document.getElementById('analysisDetailList')
+});
 
 let audioContext = null;
 let processor = null;

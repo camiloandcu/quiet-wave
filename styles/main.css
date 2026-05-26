@@ -66,6 +66,38 @@ button {
     cursor: pointer
 }
 
+button:disabled {
+    cursor: progress;
+    opacity: .7
+}
+
+.secondary-button {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(159, 179, 200, 0.28);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px
+}
+
+.button-spinner {
+    display: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-top-color: var(--text);
+    animation: spin .8s linear infinite
+}
+
+.secondary-button.is-loading .button-spinner {
+    display: inline-block
+}
+
+.secondary-button.is-loading .button-label {
+    opacity: .85
+}
+
 .badge {
     background: #14242f;
     padding: 6px 10px;
@@ -78,6 +110,197 @@ button {
     display: grid;
     grid-template-columns: 1fr;
     gap: 14px
+}
+
+.spinner {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-top-color: var(--accent);
+    animation: spin .8s linear infinite
+}
+
+.spinner--large {
+    width: 20px;
+    height: 20px;
+    border-width: 3px
+}
+
+.analysis-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    isolation: isolate
+}
+
+.analysis-overlay[hidden] {
+    display: none !important
+}
+
+.analysis-overlay__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 8, 15, 0.82);
+    backdrop-filter: blur(12px)
+}
+
+.analysis-overlay__shell {
+    position: relative;
+    width: min(1200px, 100%);
+    max-height: min(92vh, 980px);
+    overflow: auto;
+    border-radius: 22px;
+    border: 1px solid rgba(111, 132, 160, 0.24);
+    background: linear-gradient(180deg, rgba(11, 18, 32, 0.98), rgba(6, 12, 22, 0.98));
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    padding: 22px;
+    z-index: 1
+}
+
+.analysis-overlay__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 18px
+}
+
+.analysis-overlay__actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap
+}
+
+.analysis-overlay__heading-block {
+    min-width: 0
+}
+
+.analysis-eyebrow {
+    margin: 0 0 6px;
+    color: #8ccbf9;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    font-size: .74rem
+}
+
+.analysis-overlay__heading-block h2 {
+    margin: 0;
+    font-size: clamp(1.3rem, 2vw, 1.8rem)
+}
+
+.analysis-overlay__subtitle {
+    margin: 8px 0 0;
+    color: var(--muted);
+    max-width: 64ch;
+    line-height: 1.4;
+    font-size: .92rem
+}
+
+.analysis-overlay__state {
+    display: grid;
+    gap: 16px
+}
+
+.analysis-overlay__state[hidden] {
+    display: none
+}
+
+.analysis-loading-card {
+    min-height: 320px;
+    border-radius: 18px;
+    border: 1px solid rgba(111, 132, 160, 0.18);
+    background: radial-gradient(circle at top, rgba(8, 160, 247, 0.12), rgba(5, 16, 24, 0.9));
+    display: grid;
+    place-items: center;
+    gap: 16px;
+    padding: 36px;
+    text-align: center
+}
+
+.analysis-overlay__message {
+    margin: 0;
+    max-width: 50ch;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.5
+}
+
+.analysis-overlay__figure-card {
+    background: rgba(5, 16, 24, 0.56);
+    border: 1px solid rgba(111, 132, 160, 0.18);
+    border-radius: 18px;
+    padding: 12px
+}
+
+.analysis-overlay__figure-card img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    background: #051018;
+    min-height: 360px;
+    object-fit: contain
+}
+
+.analysis-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px
+}
+
+.analysis-detail-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px
+}
+
+.analysis-detail-card {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(111, 132, 160, 0.18);
+    background: rgba(5, 16, 24, 0.56);
+    display: grid;
+    gap: 6px
+}
+
+.analysis-detail-label {
+    color: var(--muted);
+    font-size: .78rem;
+    letter-spacing: .06em;
+    text-transform: uppercase
+}
+
+.analysis-detail-value {
+    color: var(--text);
+    font-size: .98rem;
+    line-height: 1.4
+}
+
+.metric-card {
+    background: rgba(5, 16, 24, 0.56);
+    border: 1px solid rgba(111, 132, 160, 0.18);
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: grid;
+    gap: 4px;
+    min-height: 66px
+}
+
+.metric-label {
+    color: var(--muted);
+    font-size: .76rem;
+    text-transform: uppercase;
+    letter-spacing: .08em
+}
+
+.metric-value {
+    font-size: 1rem;
+    color: var(--text)
 }
 
 .panel {
@@ -153,6 +376,12 @@ canvas {
     font-size: 0.9rem
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
 @media(min-width:900px) {
     .visuals {
         grid-template-columns: 1fr 1fr
@@ -160,6 +389,19 @@ canvas {
 }
 
 @media(max-width:640px) {
+    .analysis-overlay {
+        padding: 12px
+    }
+
+    .analysis-overlay__shell {
+        padding: 16px;
+        border-radius: 18px
+    }
+
+    .analysis-overlay__figure-card img {
+        min-height: 280px
+    }
+
     .controls {
         flex-wrap: wrap
     }

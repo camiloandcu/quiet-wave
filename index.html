@@ -15,6 +15,7 @@
             <div class="controls">
                 <button id="startStop">Start</button>
                 <span id="status" class="badge">Ready</span>
+                <button id="uploadAudioButton" class="secondary-button">Analyze audio</button>
                 <label class="control-inline">
                     <input type="checkbox" id="effectToggle" /> Processed
                 </label>
@@ -25,6 +26,8 @@
                 </label>
             </div>
         </header>
+
+        <input id="audioFileInput" type="file" accept="audio/*" hidden />
 
         <section class="visuals">
             <div class="panel">
@@ -51,9 +54,50 @@
             </div>
         </section>
 
+        <div id="analysisOverlay" class="analysis-overlay" hidden>
+            <div class="analysis-overlay__backdrop"></div>
+            <div class="analysis-overlay__shell" role="dialog" aria-modal="true" aria-labelledby="analysisOverlayTitle">
+                <div class="analysis-overlay__header">
+                    <div class="analysis-overlay__heading-block">
+                        <p class="analysis-eyebrow">Audio analysis</p>
+                        <h2 id="analysisOverlayTitle">Processing audio</h2>
+                        <p id="analysisOverlaySubtitle" class="analysis-overlay__subtitle">Upload result will appear
+                            here.</p>
+                    </div>
+                    <div class="analysis-overlay__actions">
+                        <button id="analysisDownload" class="secondary-button" disabled>
+                            <span class="button-label">Download PNG</span>
+                            <span class="button-spinner" aria-hidden="true"></span>
+                        </button>
+                        <button id="analysisClose" class="secondary-button">Close</button>
+                    </div>
+                </div>
+
+                <section id="analysisLoadingState" class="analysis-overlay__state analysis-overlay__state--loading">
+                    <div class="analysis-loading-card">
+                        <span class="spinner spinner--large" aria-hidden="true"></span>
+                        <p id="analysisOverlayMessage" class="analysis-overlay__message">Decoding the selected audio
+                            file...</p>
+                    </div>
+                </section>
+
+                <section id="analysisResultState" class="analysis-overlay__state analysis-overlay__state--result"
+                    hidden>
+                    <div class="analysis-overlay__figure-card">
+                        <img id="analysisComparisonImage" alt="Comparison graph" />
+                    </div>
+
+                    <div id="analysisMetrics" class="analysis-metrics" aria-label="Analysis metrics"></div>
+
+                    <div id="analysisDetailList" class="analysis-detail-list" aria-label="Supporting details"></div>
+                </section>
+            </div>
+        </div>
+
         <footer class="note">Use headphones. Click Start and grant microphone permission when prompted.</footer>
     </main>
 
+    <script src="node_modules/chart.js/dist/chart.umd.min.js"></script>
     <script type="module" src="src/main.js"></script>
 </body>
 

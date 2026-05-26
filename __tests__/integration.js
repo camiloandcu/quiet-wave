@@ -5,7 +5,7 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
-const indexPath = `file://${projectRoot}/index.html`;
+const indexPath = 'http://127.0.0.1:8000/index.html';
 
 (async () => {
   const browser = await puppeteer.launch({ headless: 'new' });
@@ -42,6 +42,11 @@ const indexPath = `file://${projectRoot}/index.html`;
         hasStartBtn: !!document.getElementById('startStop'),
         hasWaveCanvas: !!document.getElementById('waveform'),
         hasSpecCanvas: !!document.getElementById('spectrum'),
+        hasUploadButton: !!document.getElementById('uploadAudioButton'),
+        hasUploadOverlay: !!document.getElementById('analysisOverlay'),
+        hasUploadLoadingState: !!document.getElementById('analysisLoadingState'),
+        hasUploadResultState: !!document.getElementById('analysisResultState'),
+        hasUploadClose: !!document.getElementById('analysisClose'),
         hasWaveLegend: document.body.textContent.includes('Captured headphone signal') && document.body.textContent.includes('Cancellation wave'),
         initialStatus: document.getElementById('status')?.textContent,
         mocksReady: window.testMocksReady
@@ -50,7 +55,7 @@ const indexPath = `file://${projectRoot}/index.html`;
 
     console.log('✓ Page loaded successfully');
     console.log(`  Title: ${pageState.title}`);
-    console.log(`  UI Elements present: Start button: ${pageState.hasStartBtn}, Canvases: ${pageState.hasWaveCanvas && pageState.hasSpecCanvas}`);
+    console.log(`  UI Elements present: Start button: ${pageState.hasStartBtn}, Canvases: ${pageState.hasWaveCanvas && pageState.hasSpecCanvas}, Upload button: ${pageState.hasUploadButton}`);
     console.log(`  Labels present: legend=${pageState.hasWaveLegend}`);
     console.log(`  Initial status: "${pageState.initialStatus}"`);
 
@@ -72,7 +77,7 @@ const indexPath = `file://${projectRoot}/index.html`;
     // The important thing is the app handles errors gracefully
     const appHandledErrors = finalStatus === 'Unsupported' || finalStatus === 'Ready';
     
-    if (pageState.hasStartBtn && pageState.hasWaveCanvas && pageState.hasSpecCanvas && pageState.hasWaveLegend && appHandledErrors) {
+    if (pageState.hasStartBtn && pageState.hasWaveCanvas && pageState.hasSpecCanvas && pageState.hasUploadButton && pageState.hasUploadOverlay && pageState.hasUploadLoadingState && pageState.hasUploadResultState && pageState.hasUploadClose && pageState.hasWaveLegend && appHandledErrors) {
       console.log('✓ Integration test passed: App loads, UI renders, and handles headless mode gracefully');
       process.exit(0);
     } else {

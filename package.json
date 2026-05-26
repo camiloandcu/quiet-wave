@@ -13,5 +13,8 @@
     "jest": "30.4.0",
     "jest-environment-jsdom": "30.4.0",
     "puppeteer": "25.0.2"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.1"
   }
 }
